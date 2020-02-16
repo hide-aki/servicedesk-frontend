@@ -1,0 +1,18 @@
+plugins {
+    id 'com.moowork.node' version '1.3.1'
+}
+
+node {
+    download = true
+}
+
+task test(type: NpmTask) {
+    environment = ['CI': 'true']
+    args = ['run', 'test']
+    mustRunAfter npmInstall
+}
+
+task build(type: NpmTask, dependsOn: [npmInstall, test]) {
+    args = ['run', 'build']
+}
+
